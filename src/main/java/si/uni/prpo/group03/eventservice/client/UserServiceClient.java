@@ -31,6 +31,3 @@ public class UserServiceClient {
         }
     }
 }
-
-// Freya2022
-// NitroPro
