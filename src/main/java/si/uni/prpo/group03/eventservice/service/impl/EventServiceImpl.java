@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import si.uni.prpo.group03.eventservice.client.UserServiceClient;
 import si.uni.prpo.group03.eventservice.client.VenueServiceClient;
+import si.uni.prpo.group03.eventservice.dto.CreateReservationDTO;
 import si.uni.prpo.group03.eventservice.dto.EventCreateDTO;
 import si.uni.prpo.group03.eventservice.dto.EventResponseDTO;
 import si.uni.prpo.group03.eventservice.dto.EventUpdateDTO;
@@ -94,6 +95,27 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findByEventDateAfter(currentTimestamp).stream()
                 .map(eventMapper::toResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public EventResponseDTO createEventWithReservation(EventCreateDTO eventCreateDTO, Long userId) {
+        // 1. Create the event first
+        EventResponseDTO createdEvent = createEvent(eventCreateDTO, userId);
+
+        // 2. If a venueId is provided, create a reservation
+        if (eventCreateDTO.getVenueId() != null) {
+            CreateReservationDTO reservationDTO = new CreateReservationDTO();
+            reservationDTO.setVenueId(eventCreateDTO.getVenueId());
+            reservationDTO.setEventId(createdEvent.getId());
+            reservationDTO.setUserId(userId);
+            reservationDTO.setReservedDate(eventCreateDTO.getEventDate());
+            // ReservationStatus defaults to PENDING as defined in DTO
+
+            // Call VenueServiceClient to create the reservation
+            venueServiceClient.createReservation(reservationDTO);
+        }
+
+        return createdEvent;
     }
 
 }

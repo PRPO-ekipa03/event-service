@@ -32,7 +32,6 @@ public class EventResponseDTO {
 
     private String userName = null;      // Optional - Creator's name for display purposes
 
-    @NotNull
     private Long venueId;         // Venue ID
 
     private String venueName = null;     // Venue name for display

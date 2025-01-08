@@ -26,10 +26,8 @@ public class EventCreateDTO {
     @NotNull(message = "Event date is required")
     private Timestamp eventDate; // Changed to Timestamp for date handling
 
-    @NotNull(message = "Venue ID is required")
     private Long venueId;
 
-    @NotBlank(message = "Status must be given")
     private EventStatus status; // Enum for status without JPA annotations
 
     @NotNull(message = "Guest IDs cannot be null")
