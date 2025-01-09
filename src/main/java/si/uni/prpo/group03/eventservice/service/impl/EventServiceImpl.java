@@ -83,7 +83,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public List<EventResponseDTO> getEventsByUserId(Long userId) {
         // Verify user existence using UserServiceClient
-        userServiceClient.verifyUserExists(userId);
+        // userServiceClient.verifyUserExists(userId);
 
         return eventRepository.findByUserId(userId).stream()
                 .map(eventMapper::toResponseDTO)
