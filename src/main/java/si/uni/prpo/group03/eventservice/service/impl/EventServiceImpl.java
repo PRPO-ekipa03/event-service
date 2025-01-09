@@ -9,6 +9,7 @@ import si.uni.prpo.group03.eventservice.dto.CreateReservationDTO;
 import si.uni.prpo.group03.eventservice.dto.EventCreateDTO;
 import si.uni.prpo.group03.eventservice.dto.EventResponseDTO;
 import si.uni.prpo.group03.eventservice.dto.EventUpdateDTO;
+import si.uni.prpo.group03.eventservice.dto.ResponseReservationDTO;
 import si.uni.prpo.group03.eventservice.exception.EventNotFoundException;
 import si.uni.prpo.group03.eventservice.mapper.EventMapper;
 import si.uni.prpo.group03.eventservice.model.Event;
@@ -111,8 +112,11 @@ public class EventServiceImpl implements EventService {
             reservationDTO.setReservedDate(eventCreateDTO.getEventDate());
             // ReservationStatus defaults to PENDING as defined in DTO
 
-            // Call VenueServiceClient to create the reservation
-            venueServiceClient.createReservation(reservationDTO);
+            // Call VenueServiceClient to create the reservation and capture the response
+            ResponseReservationDTO reservationResponse = venueServiceClient.createReservation(reservationDTO);
+
+            // Map the returned reservation id to the event response
+            createdEvent.setReservationId(reservationResponse.getId());
         }
 
         return createdEvent;

@@ -32,5 +32,6 @@ public interface EventMapper {
     // Mapping from Entity to Response DTO
     @Mapping(target = "userName", ignore = true)      // Ignore userId, handled elsewhere
     @Mapping(target = "venueName", ignore = true)     // Ignore venueId, handled elsewhere
+    @Mapping(target = "reservationId", ignore = true)   // Ignore, is set separately if needed
     EventResponseDTO toResponseDTO(Event event);
 }

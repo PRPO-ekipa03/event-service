@@ -30,6 +30,8 @@ public class EventResponseDTO {
     @NotNull
     private Long userId;          // Creator's user ID
 
+    private Long reservationId;
+
     private String userName = null;      // Optional - Creator's name for display purposes
 
     private Long venueId;         // Venue ID
@@ -56,6 +58,14 @@ public class EventResponseDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getReservationId() {
+        return reservationId;
+    }
+
+    public void setReservationId(Long reservationId) {
+        this.reservationId = reservationId;
     }
 
     public String getDescription() {
