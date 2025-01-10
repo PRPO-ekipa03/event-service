@@ -23,9 +23,19 @@ public class EventController {
 
     @PostMapping
     public ResponseEntity<EventResponseDTO> createEvent(
-            @RequestBody @Valid EventCreateDTO eventCreateDTO,
-            @RequestParam(value = "userId", defaultValue = "1") Long userId) {
+            @RequestHeader("X-User-Id") String xUserId,
+            @RequestBody @Valid EventCreateDTO eventCreateDTO) {
+        Long userId = Long.parseLong(xUserId);
         EventResponseDTO createdEvent = eventService.createEvent(eventCreateDTO, userId);
+        return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/reservation")
+    public ResponseEntity<EventResponseDTO> createEventWithReservation(
+            @RequestHeader("X-User-Id") String xUserId,
+            @RequestBody @Valid EventCreateDTO eventCreateDTO) {
+        Long userId = Long.parseLong(xUserId);
+        EventResponseDTO createdEvent = eventService.createEventWithReservation(eventCreateDTO, userId);
         return new ResponseEntity<>(createdEvent, HttpStatus.CREATED);
     }
 
@@ -49,8 +59,10 @@ public class EventController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/users/{userId}")
-    public ResponseEntity<List<EventResponseDTO>> getEventsByUserId(@PathVariable Long userId) {
+    @GetMapping("/users")
+    public ResponseEntity<List<EventResponseDTO>> getEventsByUserId(
+            @RequestHeader("X-User-Id") String xUserId) {
+        Long userId = Long.parseLong(xUserId);
         List<EventResponseDTO> events = eventService.getEventsByUserId(userId);
         return ResponseEntity.ok(events);
     }

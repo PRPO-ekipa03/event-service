@@ -13,4 +13,6 @@ public interface EventService {
     EventResponseDTO getEventById(Long eventId);
     List<EventResponseDTO> getEventsByUserId(Long userId);
     List<EventResponseDTO> getUpcomingEvents();
+    EventResponseDTO createEventWithReservation(EventCreateDTO eventCreateDTO, Long userId);
+
 }

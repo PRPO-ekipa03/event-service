@@ -41,8 +41,7 @@ public class Event {
     @NotNull(message = "Id of the creator must exist")
     private Long userId;
 
-    @Column(nullable = false)
-    @NotNull(message = "An event must have a venue")
+    @Column(nullable = true)
     private Long venueId;
 
     @Enumerated(EnumType.STRING) // Store enum as a String in the database
