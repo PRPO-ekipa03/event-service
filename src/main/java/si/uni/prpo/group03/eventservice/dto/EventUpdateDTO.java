@@ -1,26 +1,37 @@
 package si.uni.prpo.group03.eventservice.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Size;
 import si.uni.prpo.group03.eventservice.model.Event.EventStatus;
-
 import java.sql.Timestamp;
 import java.util.List;
 
+@Schema(description = "DTO for updating an event's details")
 public class EventUpdateDTO {
 
     @Size(max = 100)
+    @Schema(description = "Updated name of the event", maxLength = 100, example = "Annual Tech Conference")
     private String name;
 
     @Size(max = 2000)
+    @Schema(description = "Updated description of the event", maxLength = 2000, example = "A detailed description of the event...")
     private String description;
 
     @Size(max = 200)
+    @Schema(description = "Updated location of the event", maxLength = 200, example = "New York City")
     private String location;
 
-    private Timestamp eventDate;       
+    @Schema(description = "Updated date and time of the event in UTC", example = "2023-09-01T10:00:00Z")
+    private Timestamp eventDate;
 
-    private EventStatus status;           
+    @Schema(
+        description = "Updated status of the event",
+        example = "UPCOMING",
+        allowableValues = {"UPCOMING", "COMPLETED", "CANCELED"}
+    )
+    private EventStatus status;
 
+    @Schema(description = "List of guest IDs invited to the event", example = "[1, 2, 3]")
     private List<Long> guestIds;      
 
     // Getters and setters
@@ -72,4 +83,3 @@ public class EventUpdateDTO {
         this.guestIds = guestIds;
     }
 }
-
